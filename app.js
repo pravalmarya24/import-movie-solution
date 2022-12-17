@@ -77,9 +77,9 @@ app.get("/movies/:movieId/", async function (request, response) {
   let getMovieById = `
             SELECT *
             FROM 
-            movie
+                movie
             WHERE
-            movie_id: ${movieId};
+                movie_id = ${movieId};
     `;
   let movieById = await db.get(getMovieById);
   response.send(convertMovieDbObjectToResponseObject(movieById));
@@ -89,7 +89,7 @@ app.get("/movies/:movieId/", async function (request, response) {
 app.put("/movies/:movieId/", async function (request, response) {
   let { movieId } = request.params;
   let putMoviesDetails = request.body;
-  let { directorId, movieName, leadActor } = putMoviesQuery;
+  let { directorId, movieName, leadActor } = putMoviesDetails;
   let putMovieQuery = `
             UPDATE
               movie 
@@ -138,7 +138,9 @@ app.get("/directors/:directorId/movies/", async function (request, response) {
   let getDirectedMovie = `
             SELECT movie_name
             FROM
-            directors
+            director
+            NATURAL JOIN 
+                movie
             WHERE
             director_id = ${directorId}
     `;
