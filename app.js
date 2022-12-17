@@ -65,7 +65,7 @@ app.post("/movies/", async function (request, response) {
             VALUES (
                 "${directorId}",
                 "${movieName}",
-                "${leadActor}",
+                "${leadActor}"
             );`;
   await db.run(postMovieQuery);
   response.send("Movie Successfully Added");
